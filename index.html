@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background: #f4f6f8;
+        color: #333;
+        scroll-behavior: smooth;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 700;
+        color: #333;
+    }
+
+    .hero h1 {
+        color: #ffffff !important;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    /* ------------------- NAVBAR ------------------- */
+    .navbar {
+        padding: 15px 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+        font-weight: bold;
+        font-size: 1.8rem;
+        color: #fff !important;
+    }
+
+    .navbar-logo {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #fff;
+        transition: transform 0.3s ease;
+    }
+
+    .navbar-logo:hover {
+        transform: scale(1.1);
+    }
+
+    .nav-link {
+        color: #ffffff !important;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        margin: 0 10px;
+        position: relative;
+    }
+
+    .nav-link:hover {
+        color: #ffc107 !important;
+    }
+
+    .nav-link.active {
+        color: #ffc107 !important;
+        border-bottom: 2px solid #ffc107;
+    }
+
+    /* ------------------- HERO SECTION ------------------- */
+    .hero {
+        position: relative;
+        min-height: 600px;
+        background: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&auto=format&fit=crop&q=80') center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        z-index: 1;
+    }
+
+    .hero .container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        animation: slideDown 0.8s ease;
+    }
+
+    .hero p {
+        font-size: 1.4rem;
+        margin-bottom: 30px;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        animation: slideUp 0.8s ease;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .hero .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 12px 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        animation: slideUp 0.8s ease 0.2s both;
+        color: #fff;
+    }
+
+    .hero .btn-primary:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    /* ------------------- FEATURE CARDS (HOME) ------------------- */
+    .features {
+        padding: 80px 0;
+        background-color: #ffffff;
+    }
+
+    .features .row {
+        display: flex;
+        gap: 30px;
+        justify-content: space-between;
+    }
+
+    .features .col-md-4 {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+    }
+
+    .features .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+    }
+
+    .features .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        z-index: 1;
+    }
+
+    .features .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .features .card-body {
+        padding: 30px;
+        position: relative;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .features .card-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .features .card-text {
+        color: #666;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        flex-grow: 1;
+        margin-bottom: 20px;
+    }
+
+    .features .card i {
+        font-size: 3rem;
+        color: #667eea;
+        margin-bottom: 15px;
+    }
+
+    .features .btn-outline-primary {
+        color: #667eea;
+        border: 2px solid #667eea;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        align-self: center;
+        margin-top: auto;
+    }
+
+    .features .btn-outline-primary:hover {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-color: transparent;
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+    /* ------------------- FOOTER ------------------- */
+    footer {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: #fff;
+        padding: 50px 20px 20px;
+        text-align: center;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    footer p {
+        margin-bottom: 15px;
+        font-weight: 500;
+    }
+
+    footer a {
+        color: #fff;
+        margin: 0 12px;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    footer a:hover {
+        transform: scale(1.3);
+        color: #ffc107;
+    }
+
+    /* ------------------- RESPONSIVE ------------------- */
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2.2rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+        }
+
+        .hero .btn-primary {
+            padding: 10px 25px;
+            font-size: 0.95rem;
+        }
+
+        .features .row {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .features .col-md-4 {
+            width: 100%;
+        }
+
+        .features .card-body {
+            padding: 25px;
+        }
+    }
+
+</style>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=200&auto=format&fit=crop&q=80" alt="Student Portal Logo" class="navbar-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cources.html">Courses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="result.html">Results</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+  <section class="hero text-center py-5">
+    <div class="container">
+        <h1><i class="fas fa-graduation-cap"></i> Welcome to Student Portal</h1>
+        <p>Your complete platform to manage profile, courses, and track academic performance</p>
+        <a href="profile.html" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Get Started</a>
+    </div>
+</section>
+
+
+    <!-- Feature Boxes -->
+    <section class="features py-5">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 50px; font-size: 2.5rem;"><i class="fas fa-star"></i> Key Features</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fa-solid fa-user fa-3x mb-3"></i>
+                            <h5 class="card-title">Profile Management</h5>
+                            <p class="card-text">Update and view your personal information, contact details, and academic background in one secure place.</p>
+                            <a href="profile.html" class="btn btn-outline-primary"><i class="fas fa-arrow-right"></i> Go to Profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fa-solid fa-book fa-3x mb-3"></i>
+                            <h5 class="card-title">Browse Courses</h5>
+                            <p class="card-text">Explore all available courses, view course details, and enroll in subjects that match your educational goals.</p>
+                            <a href="cources.html" class="btn btn-outline-primary"><i class="fas fa-arrow-right"></i> View Courses</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <i class="fa-solid fa-chart-line fa-3x mb-3"></i>
+                            <h5 class="card-title">Check Results</h5>
+                            <p class="card-text">Calculate your grades, track academic performance, and view detailed result summaries online.</p>
+                            <a href="result.html" class="btn btn-outline-primary"><i class="fas fa-arrow-right"></i> View Results</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <div class="container">
+            <p>Follow us on social media</p>
+            <a href="#" class="text-white mx-2"><i class="fab fa-facebook fa-lg"></i></a>
+            <a href="#" class="text-white mx-2"><i class="fab fa-twitter fa-lg"></i></a>
+            <a href="#" class="text-white mx-2"><i class="fab fa-instagram fa-lg"></i></a>
+            <p class="mt-3 mb-0">&copy; 2025 Student Portal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile - Student Portal</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Profile Page Styling */
+        .profile-hero {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%),
+                        url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&auto=format&fit=crop&q=80') center/cover;
+            color: #fff;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .profile-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-hero p {
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px 50px;
+        }
+
+        .profile-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .profile-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-title i {
+            color: #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+        }
+
+        #profileForm input,
+        #profileForm select {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #profileForm input:focus,
+        #profileForm select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+
+        #profileForm input::placeholder {
+            color: #999;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: #fff;
+            padding: 14px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-save:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+            color: #fff;
+        }
+
+        #savedData {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            border-left: 5px solid #667eea;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #savedData h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #savedData h4::before {
+            content: "\f058";
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #10b981;
+        }
+
+        .saved-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .saved-item:last-child {
+            border-bottom: none;
+        }
+
+        .saved-label {
+            font-weight: 600;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .saved-value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        /* Footer Styling */
+        footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            padding: 40px 0;
+            margin-top: 60px;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        footer a {
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        footer a:hover {
+            transform: scale(1.3);
+            color: #ffc107 !important;
+        }
+
+        @media (max-width: 768px) {
+            .profile-hero h1 {
+                font-size: 2rem;
+            }
+
+            .profile-hero p {
+                font-size: 1rem;
+            }
+
+            .profile-card {
+                padding: 25px;
+            }
+
+            .profile-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=200&auto=format&fit=crop&q=80" alt="Logo" class="navbar-logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="profile.html">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="cources.html">Courses</a></li>
+                <li class="nav-item"><a class="nav-link" href="result.html">Results</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Profile Hero Section -->
+<section class="profile-hero">
+    <div class="container">
+        <h1><i class="fas fa-user-circle"></i> My Profile</h1>
+        <p>Update and manage your student information</p>
+    </div>
+</section>
+
+<!-- Profile Form Section -->
+<section class="profile-container">
+    <div class="profile-card">
+        <div class="profile-title">
+            <i class="fas fa-edit"></i> Edit Profile Information
+        </div>
+
+        <form id="profileForm">
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Name</label>
+                <input type="text" id="name" placeholder="Enter your full name">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="email" placeholder="Enter your email address">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-phone"></i> Phone</label>
+                <input type="tel" id="phone" placeholder="Enter phone number (10 digits)" maxlength="10" inputmode="numeric">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-graduation-cap"></i> Class</label>
+                <select id="classSelect">
+                    <option value="">Select Class</option>
+                    <option value="BSCS">BSCS - Bachelor of Science in Computer Science</option>
+                    <option value="BSIT">BSIT - Bachelor of Science in Information Technology</option>
+                    <option value="BBA">BBA - Bachelor of Business Administration</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-save"><i class="fas fa-save"></i> Save Profile</button>
+        </form>
+
+        <div id="savedData" style="display: none;"></div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-4">
+    <div class="container">
+        <p>Follow us on social media</p>
+        <a href="#" class="text-white mx-2"><i class="fab fa-facebook fa-lg"></i></a>
+        <a href="#" class="text-white mx-2"><i class="fab fa-twitter fa-lg"></i></a>
+        <a href="#" class="text-white mx-2"><i class="fab fa-instagram fa-lg"></i></a>
+        <p class="mt-3 mb-0">&copy; 2025 Student Portal. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    // Strict phone number validation - only numeric input allowed
+    $("#phone").on("keypress", function(e) {
+        // Allow only numeric characters (0-9)
+        if (!/[0-9]/.test(String.fromCharCode(e.which))) {
+            e.preventDefault();
+        }
+    });
+
+    // Prevent paste of non-numeric characters
+    $("#phone").on("paste", function(e) {
+        let pastedText = (e.clipboardData || window.clipboardData).getData('text');
+        if (!/^\d+$/.test(pastedText)) {
+            e.preventDefault();
+            alert("Only numeric values are allowed in phone number");
+        }
+    });
+
+    // Prevent drag and drop of non-numeric content
+    $("#phone").on("drop", function(e) {
+        e.preventDefault();
+        let droppedText = e.originalEvent.dataTransfer.getData('text');
+        if (!/^\d+$/.test(droppedText)) {
+            alert("Only numeric values are allowed in phone number");
+        } else {
+            $(this).val(droppedText);
+        }
+    });
+
+    // Real-time input validation
+    $("#phone").on("input", function() {
+        let value = $(this).val();
+        // Remove any non-numeric characters if somehow they got through
+        let cleanValue = value.replace(/[^0-9]/g, '');
+        if (value !== cleanValue) {
+            $(this).val(cleanValue);
+        }
+    });
+
+    $("#profileForm").on("submit", function (e) {
+        e.preventDefault();
+
+        let name = $("#name").val().trim();
+        let email = $("#email").val().trim();
+        let phone = $("#phone").val().trim();
+        let className = $("#classSelect").val();
+
+        // Validation
+        if (name === "") {
+            alert("Name is required");
+            return;
+        }
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+            alert("Enter a valid email format");
+            return;
+        }
+        if (phone === "") {
+            alert("Phone number is required");
+            return;
+        }
+        if (!/^\d+$/.test(phone)) {
+            alert("Phone must be numeric only");
+            return;
+        }
+        if (phone.length < 10) {
+            alert("Phone number must be at least 10 digits");
+            return;
+        }
+        if (className === "") {
+            alert("Please select a class");
+            return;
+        }
+
+        let student = {
+            name: name,
+            email: email,
+            phone: phone,
+            className: className
+        };
+
+        // Save to localStorage
+        localStorage.setItem("studentProfile", JSON.stringify(student));
+
+        $("#savedData").html(`
+            <h4>Profile Saved Successfully</h4>
+            <div class="saved-item">
+                <span class="saved-label"><i class="fas fa-user"></i> Name</span>
+                <span class="saved-value">${student.name}</span>
+            </div>
+            <div class="saved-item">
+                <span class="saved-label"><i class="fas fa-envelope"></i> Email</span>
+                <span class="saved-value">${student.email}</span>
+            </div>
+            <div class="saved-item">
+                <span class="saved-label"><i class="fas fa-phone"></i> Phone</span>
+                <span class="saved-value">${student.phone}</span>
+            </div>
+            <div class="saved-item">
+                <span class="saved-label"><i class="fas fa-graduation-cap"></i> Class</span>
+                <span class="saved-value">${student.className}</span>
+            </div>
+        `).show();
+    });
+});
+</script>
+
+</body>
+</html>

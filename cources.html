@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Courses - Student Portal</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" href="style.css">
+<style>
+    /* Courses Page Specific Styling */
+    .courses-hero {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%),
+                    url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&auto=format&fit=crop&q=80') center/cover;
+        color: #fff;
+        padding: 60px 20px;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .courses-hero h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .courses-hero p {
+        font-size: 1.2rem;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .search-section {
+        margin-bottom: 40px;
+    }
+
+    #searchCourse {
+        padding: 12px 20px;
+        border: 2px solid #667eea;
+        border-radius: 50px;
+        font-size: 1rem;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    #searchCourse:focus {
+        outline: none;
+        border-color: #764ba2;
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .courses-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+        padding: 0 20px;
+    }
+
+    .course-item {
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .course-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .course-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        z-index: 1;
+    }
+
+    .course-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .course-card-body {
+        padding: 25px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .course-card h5 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 12px;
+    }
+
+    .course-card p {
+        color: #666;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    .course-icon {
+        font-size: 2.5rem;
+        color: #667eea;
+        margin-bottom: 15px;
+    }
+
+    .course-btn {
+        align-self: flex-start;
+        margin-top: auto;
+    }
+
+    .btn-enroll {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: #fff;
+        padding: 10px 25px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+    .btn-enroll:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        color: #fff;
+    }
+
+    .no-courses {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+        font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+        .courses-hero h1 {
+            font-size: 2rem;
+        }
+
+        .courses-hero p {
+            font-size: 1rem;
+        }
+
+        .courses-container {
+            grid-template-columns: 1fr;
+            padding: 0;
+        }
+    }
+</style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<div class="container">
+<a class="navbar-brand" href="index.html">
+    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=200&auto=format&fit=crop&q=80" alt="Student Portal Logo" class="navbar-logo">
+</a>
+<button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="nav">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+<li class="nav-item"><a class="nav-link" href="profile.html">Profile</a></li>
+<li class="nav-item"><a class="nav-link active" href="cources.html">Courses</a></li>
+<li class="nav-item"><a class="nav-link" href="result.html">Results</a></li>
+</ul>
+</div>
+</div>
+</nav>
+
+<!-- Courses Hero Section -->
+<section class="courses-hero">
+<div class="container">
+<h1><i class="fas fa-book"></i> Available Courses</h1>
+<p>Explore our comprehensive course catalog and enroll in your preferred subjects</p>
+</div>
+</section>
+
+<!-- Search Section -->
+<section class="container search-section">
+<div class="row justify-content-center">
+<div class="col-md-6">
+<input type="text" id="searchCourse" class="form-control" placeholder="🔍 Search courses by name...">
+</div>
+</div>
+</section>
+
+<!-- Courses Grid -->
+<section class="container-fluid pb-5">
+<div class="courses-container" id="courseList">
+<div class="course-item">
+    <div class="card course-card">
+        <div class="course-card-body">
+            <div class="course-icon"><i class="fas fa-code"></i></div>
+            <h5>Web Development</h5>
+            <p>Learn HTML, CSS, and JavaScript to build modern, responsive websites.</p>
+            <button class="btn-enroll course-btn" data-bs-toggle="modal" data-bs-target="#enrollModal" data-course="Web Development" data-instructor="John Smith" data-duration="8 weeks" data-fee="$199">Enroll Now</button>
+        </div>
+    </div>
+</div>
+
+<div class="course-item">
+    <div class="card course-card">
+        <div class="course-card-body">
+            <div class="course-icon"><i class="fas fa-python"></i></div>
+            <h5>Python Programming</h5>
+            <p>Master Python from beginner to advanced level with real-world projects.</p>
+            <button class="btn-enroll course-btn" data-bs-toggle="modal" data-bs-target="#enrollModal" data-course="Python Programming" data-instructor="Sarah Johnson" data-duration="10 weeks" data-fee="$249">Enroll Now</button>
+        </div>
+    </div>
+</div>
+
+<div class="course-item">
+    <div class="card course-card">
+        <div class="course-card-body">
+            <div class="course-icon"><i class="fas fa-database"></i></div>
+            <h5>Database Systems</h5>
+            <p>Learn MySQL, SQL Server, and database design principles.</p>
+            <button class="btn-enroll course-btn" data-bs-toggle="modal" data-bs-target="#enrollModal" data-course="Database Systems" data-instructor="Mike Davis" data-duration="6 weeks" data-fee="$179">Enroll Now</button>
+        </div>
+    </div>
+</div>
+
+<div class="course-item">
+    <div class="card course-card">
+        <div class="course-card-body">
+            <div class="course-icon"><i class="fas fa-mobile-alt"></i></div>
+            <h5>Mobile App Development</h5>
+            <p>Build amazing mobile apps using Flutter and other modern frameworks.</p>
+            <button class="btn-enroll course-btn" data-bs-toggle="modal" data-bs-target="#enrollModal" data-course="Mobile App Development" data-instructor="Emma Wilson" data-duration="12 weeks" data-fee="$299">Enroll Now</button>
+        </div>
+    </div>
+</div>
+
+<div class="course-item">
+    <div class="card course-card">
+        <div class="course-card-body">
+            <div class="course-icon"><i class="fas fa-palette"></i></div>
+            <h5>Graphic Designing</h5>
+            <p>Master Photoshop, Illustrator, and modern design principles.</p>
+            <button class="btn-enroll course-btn" data-bs-toggle="modal" data-bs-target="#enrollModal" data-course="Graphic Designing" data-instructor="Lisa Anderson" data-duration="8 weeks" data-fee="$219">Enroll Now</button>
+        </div>
+    </div>
+</div>
+</div>
+</section>
+
+
+<!-- Enrollment Modal -->
+<div class="modal fade" id="enrollModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border: none; border-radius: 15px; overflow: hidden;">
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px;">
+                <h5 class="modal-title" id="courseTitle">Course Enrollment</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" style="padding: 30px;">
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <p style="margin: 0; color: #666; font-size: 0.9rem;">Course Name</p>
+                    <h6 id="courseName" style="margin: 5px 0; font-weight: 700; color: #333;"></h6>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-6">
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 10px;">
+                            <p style="margin: 0; color: #666; font-size: 0.85rem;"><i class="fas fa-user"></i> Instructor</p>
+                            <h6 id="instructorName" style="margin: 5px 0; font-weight: 600; color: #333;"></h6>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 10px;">
+                            <p style="margin: 0; color: #666; font-size: 0.85rem;"><i class="fas fa-clock"></i> Duration</p>
+                            <h6 id="duration" style="margin: 5px 0; font-weight: 600; color: #333;"></h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #e7f0ff; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #667eea;">
+                    <p style="margin: 0; color: #666; font-size: 0.9rem;">Course Fee</p>
+                    <h5 id="courseFee" style="margin: 5px 0; font-weight: 700; color: #667eea;"></h5>
+                </div>
+
+                <div style="background: #f0f8f0; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #28a745;">
+                    <p style="margin: 0; font-size: 0.85rem; color: #28a745;"><i class="fas fa-check-circle"></i> You'll receive course materials and certificate upon completion</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 20px; border-top: 1px solid #eee;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 50px; padding: 8px 25px;">Cancel</button>
+                <button type="button" class="btn btn-enroll" style="border-radius: 50px; padding: 8px 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; font-weight: 600;" onclick="confirmEnrollment()">Confirm Enrollment</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+$(document).ready(function(){
+    // Search functionality
+    $("#searchCourse").on("keyup", function(){
+        let search = $(this).val().toLowerCase();
+        let hasResults = false;
+        
+        $(".course-item").each(function(){
+            if($(this).text().toLowerCase().includes(search)){
+                $(this).slideDown(300);
+                hasResults = true;
+            } else {
+                $(this).slideUp(300);
+            }
+        });
+        
+        if(!hasResults && search.length > 0) {
+            $(".courses-container").append('<div class="no-courses">No courses found matching your search.</div>');
+        } else {
+            $(".no-courses").remove();
+        }
+    });
+
+    // Modal enrollment details
+    $('#enrollModal').on('show.bs.modal', function (e) {
+        var button = $(e.relatedTarget);
+        var courseName = button.data('course');
+        var instructor = button.data('instructor');
+        var duration = button.data('duration');
+        var fee = button.data('fee');
+        
+        $('#courseTitle').text(courseName + ' - Enrollment');
+        $('#courseName').text(courseName);
+        $('#instructorName').text(instructor);
+        $('#duration').text(duration);
+        $('#courseFee').text(fee);
+    });
+});
+
+function confirmEnrollment() {
+    var courseName = $('#courseName').text();
+    alert('Successfully enrolled in: ' + courseName + '!\n\nYou will receive a confirmation email shortly.');
+    $('#enrollModal').modal('hide');
+}
+</script>
+</body>
+</html>
